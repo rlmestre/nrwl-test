@@ -1,6 +1,5 @@
 import {TestBed, waitForAsync} from '@angular/core/testing';
 import {AppComponent} from './app.component';
-import {BackendService} from "./backend.service";
 
 describe('AppComponent', () => {
     beforeEach(waitForAsync(() => {
@@ -9,7 +8,6 @@ describe('AppComponent', () => {
                 AppComponent
             ],
             providers: [
-                {provide: BackendService, useValue: new BackendService()}
             ]
 
         }).compileComponents();
