@@ -1,8 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import {BackendService} from './backend.service';
 import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { TicketsEffects, ticketReducers } from './data-access/ticket';
+import { UserEffects, userReducers } from './data-access/user';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -13,15 +17,17 @@ import { RouterModule } from '@angular/router';
     RouterModule.forRoot([
       {
         path: '',
-        loadChildren: () => import('./detail-view/detail-view.module').then(m => m.DetailViewModule)
+        loadChildren: () => import('./list-view/list-view.module').then(m => m.ListViewModule)
       },
       {
-        path: 'details',
+        path: 'ticket',
         loadChildren: () => import('./detail-view/detail-view.module').then(m => m.DetailViewModule)
       },
-    ])
+    ]),
+    StoreModule.forRoot({ tickets: ticketReducers, users: userReducers }),
+    EffectsModule.forRoot([ TicketsEffects, UserEffects ]),
+    StoreDevtoolsModule.instrument(),
   ],
-  providers: [BackendService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

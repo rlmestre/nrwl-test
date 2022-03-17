@@ -1229,10 +1229,31 @@
   dependencies:
     tslib "^2.0.0"
 
+"@ngrx/component@^13.0.2":
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/@ngrx/component/-/component-13.0.2.tgz#7555e126061f054a1654134cd5223b61e52130f2"
+  integrity sha512-Izq984Soqt/ze/XyNLTvFjdMkuGLwarfe0hT9qjVO8cHgI5hEAvjwklv+JHmM1dtJOZ+USoM0rgwaUU5iInQfA==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngrx/effects@^13.0.2":
   version "13.0.2"
   resolved "https://registry.npmjs.org/@ngrx/effects/-/effects-13.0.2.tgz"
   integrity sha512-7yW/KCxlRatDkdEriSnORlOYX8+1QAWEjPulNmHSPwehkzTQ3fIPfRBQy8xP8bnjwvGxnEZNwQlU4q1KVYOfhg==
+  dependencies:
+    tslib "^2.0.0"
+
+"@ngrx/entity@^13.0.2":
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-13.0.2.tgz#99fceb9f160de67106364e27299e242b1608affc"
+  integrity sha512-sAN/YDvDNy4fmCOWU8LfPp8YI8XJcvmO89XTRSoJjo3O9BIbCSEw2gYHe1V7gWHLY5Pr9wiMybKhd4RHtzFHgQ==
+  dependencies:
+    tslib "^2.0.0"
+
+"@ngrx/store-devtools@^13.0.2":
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-13.0.2.tgz#2b412fe47894fbb0c2aec8c1402f150bc139d5e9"
+  integrity sha512-fcQ5A7cv9PONFvqlpFPXHswWjEflJvqrNt6wmywlxMtJDjkgzCHpvRiJqup/FiTosblRERoeZXN0oHW3Er3+rw==
   dependencies:
     tslib "^2.0.0"
 

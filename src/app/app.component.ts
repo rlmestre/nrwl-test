@@ -1,14 +1,18 @@
-import { Component } from '@angular/core';
-import {BackendService} from './backend.service';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { TicketActions } from './data-access/ticket';
+import { UserActions } from './data-access/user';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  tickets = this.backend.tickets();
-  users = this.backend.users();
+export class AppComponent implements OnInit {
+  constructor(private store: Store) {}
 
-  constructor(private backend: BackendService) {}
+  ngOnInit() {
+    this.store.dispatch(TicketActions.loadAllTickets());
+    this.store.dispatch(UserActions.loadAllUsers());
+  }
 }

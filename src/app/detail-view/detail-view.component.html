@@ -1,1 +1,47 @@
-<p>detail-view works!</p>
+<a routerLink="/"><- Back</a>
+
+<div *ngIf="loading$ | async">
+    <img src="assets/loading.svg" />
+</div>
+
+<ng-container *ngrxLet="vm$; let vm">
+    <ng-container *ngIf="vm.ticket.id != null; else empty">
+        <div>Ticket: {{ vm.ticket.id }}</div>
+        <div>Description: {{ vm.ticket.id }}</div>
+
+        Assignee:
+        <ng-container *ngIf="!vm.showForm; else form">
+            {{ vm.assignee?.name ?? 'Unassigned' }}
+
+            <button (click)="showReassignForm(true)">
+                {{ vm.assignee?.name ? 'Reassign' : 'Assign' }}
+            </button>
+        </ng-container>
+
+        <div>
+            Completed: {{ vm.ticket.completed }}
+            <button *ngIf="!vm.ticket.completed" (click)="completeTicket(vm.ticket.id)">Complete</button>
+        </div>
+
+
+        <ng-template #form>
+            <select #userId>
+                <option *ngFor="let user of vm.users" [value]="user.id">{{user.name}}</option>
+            </select>
+            <button (click)="assignTicket(vm.ticket.id, userId.value)">Assign</button>
+            <button (click)="showReassignForm(false)">Cancel</button>
+        </ng-template>
+    </ng-container>
+</ng-container>
+
+<ng-template #loading>
+    <div>
+        <img src="assets/loading.svg" />
+    </div>
+</ng-template>
+
+<ng-template #empty>
+    <div>
+        Ticket not found
+    </div>
+</ng-template>
