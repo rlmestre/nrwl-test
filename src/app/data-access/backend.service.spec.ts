@@ -2,7 +2,7 @@ import { BackendService } from './backend.service';
 import { catchError, take } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-fdescribe('BackendService', () => {
+describe('BackendService', () => {
   let service: BackendService;
 
   beforeEach(() => {
