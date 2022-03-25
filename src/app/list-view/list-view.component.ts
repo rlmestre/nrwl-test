@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectTicketListLoading, ticketsSelector, TicketActions } from '../data-access/ticket';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { debounceTime, map, startWith } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -11,8 +11,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./list-view.component.css']
 })
 export class ListViewComponent {
+  searchControl = this.fb.control('');
+
   loading$ = this.store.select(selectTicketListLoading);
-  tickets$ = this.store.select(ticketsSelector.selectAll);
+  tickets$ = combineLatest([
+      this.store.select(ticketsSelector.selectAll),
+      this.searchControl.valueChanges.pipe(startWith(this.searchControl.value))
+  ]).pipe(
+      debounceTime(500),
+      map(([tickets, searchValue]) => {
+        console.log(tickets, searchValue)
+        return tickets.filter((ticket) => ticket.description.includes(searchValue))
+      })
+  );
   showForm$ = new BehaviorSubject(false);
 
   vm$ = combineLatest([this.loading$, this.tickets$, this.showForm$]).pipe(
@@ -23,7 +34,8 @@ export class ListViewComponent {
     description: [null, Validators.required],
   });
 
-  constructor(private store: Store, private fb: FormBuilder) { }
+
+  constructor(private store: Store, private fb: FormBuilder) {}
 
   createNewTicket(form: FormGroup) {
     if (form.invalid) {

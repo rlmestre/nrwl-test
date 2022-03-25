@@ -22,10 +22,20 @@ export class TicketsEffects {
 
     newTicket$ = createEffect(() => this.actions$.pipe(
         ofType(TicketActions.createTicket),
-        mergeMap(({ description }) => this.backend.newTicket({ description }).pipe(
+        switchMap(({ description }) => this.backend.newTicket({ description }).pipe(
             map((ticket) => TicketActions.ticketCreated({ ticket })),
             catchError(() => of(
                 TicketActions.errorCreatingTicket({ error: 'Error creating ticket' })
+            ))
+        ))
+    ))
+
+    completeTicket$ = createEffect(() => this.actions$.pipe(
+        ofType(TicketActions.completeTicket),
+        switchMap(({ ticketId }) => this.backend.complete(ticketId, true).pipe(
+            map((ticket) => TicketActions.ticketCompleted({ ticket })),
+            catchError(() => of(
+                TicketActions.errorCompletingTicket({ error: 'Error completing ticket', ticketId })
             ))
         ))
     ))

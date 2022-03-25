@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { selectTicketById, selectTicketListLoading, Ticket, TicketActions } from '../data-access/ticket';
 import { ActivatedRoute } from '@angular/router';
-import { concatMap, filter, map, switchMap } from 'rxjs/operators';
+import { concatMap, delay, filter, map, switchMap, tap } from 'rxjs/operators';
 import { selectUserById, User, usersSelector } from '../data-access/user';
 
 @Component({
@@ -20,9 +20,11 @@ export class DetailViewComponent {
   );
 
   private readonly assignee$ = this.ticket$.pipe(
-      filter((ticket) => !!ticket?.assigneeId),
-      concatMap((ticket) =>
-          this.store.select(selectUserById(ticket.assigneeId)) as Observable<User>
+      // filter((ticket) => !!ticket?.assigneeId),
+      switchMap((ticket) =>
+          ticket
+              ? this.store.select(selectUserById(ticket.assigneeId)) as Observable<User>
+              : of(null)
       ),
   );
 
@@ -36,6 +38,7 @@ export class DetailViewComponent {
       this.users$,
       this.showForm$,
   ]).pipe(
+      filter((params) => params.every((param) => param != null)),
       map(([loading, ticket, assignee, users, showForm]) => ({
           loading,
           ticket,

@@ -16,6 +16,11 @@ export const completeTicket = createAction(
     props<{ ticketId: Ticket['id'] }>()
 )
 
+export const ticketCompleted = createAction(
+    '[Ticket Effects] Completed ticket',
+    props<{ ticket: Ticket }>()
+)
+
 export const assignTicket = createAction(
     '[Details View] Assign ticket',
     props<{ ticketId: Ticket['id'], assigneeId: User['id'] }>()
@@ -39,4 +44,9 @@ export const errorLoadingTickets = createAction(
 export const errorCreatingTicket = createAction(
     '[Create Ticket Effect] Error creating ticket',
     props<{ error: string }>()
+)
+
+export const errorCompletingTicket = createAction(
+    '[Complete Ticket Effect] Error completing ticket',
+    props<{ error: string, ticketId: Ticket['id'] }>()
 )

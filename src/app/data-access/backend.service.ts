@@ -87,7 +87,7 @@ export class BackendService {
     return this.update(ticketId, { assigneeId: userId });
   }
 
-  complete(ticketId: number, completed: boolean) {
+  complete(ticketId: number, completed: boolean): Observable<Ticket> {
     return this.update(ticketId, { completed });
   }
 
@@ -103,6 +103,9 @@ export class BackendService {
     this.storedTickets = this.storedTickets.map(t =>
       t.id === ticketId ? updatedTicket : t
     );
+
+    // TODO: remove
+    return throwError(new Error("error updating the ticket"));
 
     return of(updatedTicket).pipe(delay(randomDelay()));
   }

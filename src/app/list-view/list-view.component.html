@@ -1,5 +1,6 @@
 <ng-container *ngrxLet="vm$; let vm">
     <ng-container *ngIf="!vm.loading; else loading">
+        <input type="text" placeholder="Search" [formControl]="searchControl" />
         <ul>
             <li *ngFor="let t of vm.tickets">
                 Ticket: {{t.id}}, {{t.description}}

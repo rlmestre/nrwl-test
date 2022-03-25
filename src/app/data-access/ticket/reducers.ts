@@ -23,7 +23,26 @@ export const ticketReducers = createReducer(
         ticketAdapter.updateOne({
             id: action.ticketId,
             changes: {
-                completed: true,
+                completed: true
+            },
+        }, state)
+    ),
+    on(TicketActions.errorCompletingTicket, (state, action) =>
+        ticketAdapter.updateOne({
+            id: action.ticketId,
+            changes: {
+                completed: false
+            },
+        }, {
+            ...state,
+            error: action.error
+        })
+    ),
+    on(TicketActions.ticketCompleted, (state, action) =>
+        ticketAdapter.updateOne({
+            id: action.ticket.id,
+            changes: {
+                ...action.ticket
             },
         }, state)
     ),
